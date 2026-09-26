@@ -1,4 +1,4 @@
-Video Presentation: [YouTube link will go here]
+Video Presentation: [Watch My Presentation](https://youtu.be/bWpkYUOZUBc)
 
 # Video Game Backlog Tracker
 Created by Colin Lee
