@@ -6,6 +6,9 @@ Purpose: Allow users to add, view, search, complete, and rate video games while 
 Resources: Python Crash Course, 3rd Edition;
 Date: September 25, 2026
 """
+
+from game import Game
+
 games = []
 
 print("Welcome to the Video Game Backlog Tracker!")
@@ -25,11 +28,7 @@ while True:
     genre = input("Enter the game genre: ")
     status = input("Enter the game status: ")
     
-    game = {
-      "title": title,
-      "genre": genre,
-      "status": status
-    }
+    game = Game(title, genre, status)
     games.append(game)
   
     print(title, "was added to your backlog!")
@@ -38,21 +37,21 @@ while True:
         print("No games in your backlog.")
       else:
         for game in games:
-          print(game["title"], "-", game["genre"], "-", game["status"])
+         print(game.title, "-", game.genre, "-", game.status)
 
-          if "rating" in game:
-              print("Rating:", game["rating"], "/10")
+         if game.rating is not None:
+            print("Rating:", game.rating, "/10")
   elif choice == "3":
     search = input("Enter the game title:")
 
     found = False
 
     for game in games:
-      if game["title"].lower() == search.lower():
+      if game.title.lower() == search.lower():
           print("Game found!")
-          print("Title:", game["title"])
-          print("Genre:", game["genre"])
-          print("Status:", game["status"])
+          print("Title:", game.title)
+          print("Genre:", game.genre)
+          print("Status:", game.status)
           found = True
     if not found:
         print("Game not found.")
@@ -62,8 +61,8 @@ while True:
     found = False
 
     for game in games:
-      if game["title"].lower() == title.lower():
-          game["status"] = "Completed"
+      if game.title.lower() == title.lower():
+          game.mark_completed()
           print(title, "has been marked as completed!")
           found = True
           break
@@ -76,11 +75,11 @@ while True:
     found = False
 
     for game in games:
-      if game["title"].lower() == title.lower():
+      if game.title.lower() == title.lower():
           rating = input("Rate this game from 1 to 10: ")
 
           if rating.isdigit() and 1 <= int(rating) <= 10:
-              game["rating"] = int(rating)
+              game.rate_game(int(rating))
               print(title, "has been rated", rating, "out of 10!")
           else:
               print("Invalid rating. Enter a number from 1 to 10.")
@@ -95,7 +94,7 @@ while True:
       completed_games = 0
 
       for game in games:
-          if game["status"].lower() == "completed":
+          if game.status.lower() == "completed":
               completed_games += 1
 
       remaining_games = total_games - completed_games
