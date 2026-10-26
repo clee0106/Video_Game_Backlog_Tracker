@@ -11,6 +11,22 @@ from game import Game
 
 games = []
 
+def show_statistics(games):
+  """Display total, completed, and remaining game statistics."""
+  total_games = len(games)
+  completed_games = 0
+
+  for game in games:
+    if game.status.lower() == "completed":
+      completed_games += 1
+
+  remaining_games = total_games - completed_games
+
+  print("\nGame Statistics")
+  print("Total games:", total_games)
+  print("Completed games:", completed_games)
+  print("Remaining games:", remaining_games)
+
 print("Welcome to the Video Game Backlog Tracker!")
 while True:
   print("\nMenu")
@@ -90,19 +106,7 @@ while True:
     if not found:
         print("Game not found.")
   elif choice == "6":
-      total_games = len(games)
-      completed_games = 0
-
-      for game in games:
-          if game.status.lower() == "completed":
-              completed_games += 1
-
-      remaining_games = total_games - completed_games
-
-      print("\nGame Statistics")
-      print("Total games:", total_games)
-      print("Completed games:", completed_games)
-      print("Remaining games:", remaining_games)
+      show_statistics(games)
   elif choice == "7":
     print("Goodbye!")
     break
