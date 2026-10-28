@@ -27,6 +27,25 @@ def show_statistics(games):
   print("Completed games:", completed_games)
   print("Remaining games:", remaining_games)
 
+def find_game(games, title):
+  """Return a game that matches the requested title."""
+  for game in games:
+    if game.title.lower() == title.lower():
+      return game
+
+  return None
+
+def add_game(games):
+  """Create a new Game object and add it to the backlog."""
+  title = input("Enter the game title: ")
+  genre = input("Enter the game genre: ")
+  status = input("Enter the game status: ")
+
+  game = Game(title, genre, status)
+  games.append(game)
+
+  print(title, "was added to your backlog!")
+
 print("Welcome to the Video Game Backlog Tracker!")
 while True:
   print("\nMenu")
@@ -40,14 +59,7 @@ while True:
   
   choice = input("Enter your choice: ")
   if choice == "1":
-    title = input("Enter the game title: ")
-    genre = input("Enter the game genre: ")
-    status = input("Enter the game status: ")
-    
-    game = Game(title, genre, status)
-    games.append(game)
-  
-    print(title, "was added to your backlog!")
+    add_game(games)
   elif choice == "2":
       if len(games) == 0:
         print("No games in your backlog.")
@@ -60,16 +72,17 @@ while True:
   elif choice == "3":
     search = input("Enter the game title:")
 
-    found = False
+    game = find_game(games, search)
 
-    for game in games:
-      if game.title.lower() == search.lower():
-          print("Game found!")
-          print("Title:", game.title)
-          print("Genre:", game.genre)
-          print("Status:", game.status)
-          found = True
-    if not found:
+    if game:
+        print("Game found!")
+        print("Title:", game.title)
+        print("Genre:", game.genre)
+        print("Status:", game.status)
+
+        if game.rating is not None:
+          print("Rating:", game.rating, "/10")
+    else:
         print("Game not found.")
   elif choice == "4":
     title = input("Enter the game title: ")
