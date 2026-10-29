@@ -8,8 +8,9 @@ Date: September 25, 2026
 """
 
 from game import Game
+from storage import load_games, save_games
 
-games = []
+games = load_games()
 
 def show_statistics(games):
   """Display total, completed, and remaining game statistics."""
@@ -43,6 +44,7 @@ def add_game(games):
 
   game = Game(title, genre, status)
   games.append(game)
+  save_games(games)
 
   print(title, "was added to your backlog!")
 
@@ -92,6 +94,7 @@ while True:
     for game in games:
       if game.title.lower() == title.lower():
           game.mark_completed()
+          save_games(games)
           print(title, "has been marked as completed!")
           found = True
           break
@@ -109,6 +112,7 @@ while True:
 
           if rating.isdigit() and 1 <= int(rating) <= 10:
               game.rate_game(int(rating))
+              save_games(games)
               print(title, "has been rated", rating, "out of 10!")
           else:
               print("Invalid rating. Enter a number from 1 to 10.")
